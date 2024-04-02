@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\company;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,6 +14,14 @@ return new class extends Migration
     {
         Schema::create('people', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('email');
+            $table->string('phone');
+            $table->string('address1');
+            $table->string('address2');
+            $table->string('city');
+            $table->string('postcode');
+            $table->foreignIdFor(company::class)->index();
             $table->timestamps();
         });
     }
