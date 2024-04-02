@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\lead;
+use App\Models\company;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
