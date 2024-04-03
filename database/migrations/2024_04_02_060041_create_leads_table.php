@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('leads', function (Blueprint $table) {
             $table->id();
-            $table->string('product');
-            $table->string('source');
-            $table->string('status');
-            $table->text('description');
-            $table->foreignIdFor(company::class)->index();
-            $table->foreignIdFor(person::class)->index();
+            $table->string('product')->nullable();
+            $table->string('source')->nullable();
+            $table->string('status')->nullable();
+            $table->text('description')->nullable();
+            $table->foreignIdFor(company::class, 'company_id')->nullable()->index();
+            $table->foreignIdFor(person::class, 'person_id')->nullable()->index();
             $table->timestamps();
         });
     }

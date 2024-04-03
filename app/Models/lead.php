@@ -2,24 +2,28 @@
 
 namespace App\Models;
 
+use App\Models\person;
+use App\Models\company;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class lead extends Model
+
 {
     protected $fillable = [
-        'product', 'source', 'status', 'description',
+        'product', 'source', 'status', 'description', 'people_id', 'company_id', 
     ];
 
-    public function people(): HasMany
+    public function person(): BelongsTo
     {
-        return $this->hasMany(person::class);
+        return $this->belongsTo(person::class, 'company_id');
     }
 
-    public function companies(): HasMany
+    public function company(): BelongsTo
     {
-        return $this->hasMany(company::class);
+        return $this->belongsTo(company::class, 'company_id');
     }
 
     use HasFactory;

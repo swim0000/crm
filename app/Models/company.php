@@ -13,9 +13,9 @@ class company extends Model
         'name', 'website', 'email', 'phone', 'address1', 'address2', 'city', 'postcode',
     ];
 
-    public function lead(): BelongsTo
+    public function lead(): HasMany
     {
-        return $this->belongsTo(lead::class,'lead_id');
+        return $this->hasMany(lead::class);
     }
 
     public function people(): HasMany

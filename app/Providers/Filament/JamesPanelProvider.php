@@ -26,6 +26,8 @@ class JamesPanelProvider extends PanelProvider
             ->default()
             ->id('james')
             ->path('james')
+            ->spa()
+            ->registration()
             ->login()
             ->colors([
                 'primary' => Color::Amber,

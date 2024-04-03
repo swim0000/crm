@@ -3,24 +3,22 @@
 namespace App\Filament\Resources;
 
 use Filament\Forms;
-use App\Models\Lead;
 use Filament\Tables;
+use App\Models\Person;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
-use Filament\Forms\Components\Group;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
-use Filament\Forms\Components\MarkdownEditor;
-use App\Filament\Resources\LeadResource\Pages;
+use App\Filament\Resources\PersonResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\LeadResource\RelationManagers;
+use App\Filament\Resources\PersonResource\RelationManagers;
+use Filament\Forms\Components\Select;
 
-class LeadResource extends Resource
+class PersonResource extends Resource
 {
-    protected static ?string $model = Lead::class;
+    protected static ?string $model = Person::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -28,22 +26,23 @@ class LeadResource extends Resource
     {
         return $form
             ->schema([
-                Section::make('Create a Lead')->schema([
-                    TextInput::make('product')->required(),
-                    TextInput::make('source')->required(),
-                    Select::make('status')->required()
-                    ->options([
-                        'new' => 'New',
-                        'prospect' => 'Prospect',
-                        'currently_selling' => 'Currently selling',
-                    ]),
-                    MarkdownEditor::make('description')
+                Section::make('Company')->schema([
+                    TextInput::make('name')
+                    ->required(),
+                    TextInput::make('email')
+                    ->email(),
+                    TextInput::make('phone')
+                    ->tel(),
+                    TextInput::make('job_title'),
+                    TextInput::make('address1'),
+                    TextInput::make('address2'),
+                    TextInput::make('city'),
+                    TextInput::make('postcode'),
                 ])->columnSpan(1)->columns(2),
-                Group::make()->schema([
-                    Section::make('Company')->schema([
+                Section::make('Company')->schema([
                     Select::make('company_id')
                     ->relationship('company', 'name')
-                    ->label('Company')
+                    ->label('company')
                     ->default(null)
                     ->searchable()
                     ->preload()
@@ -61,47 +60,30 @@ class LeadResource extends Resource
                         TextInput::make('city'),
                         TextInput::make('postcode'),
                     ]),
-                ])->columnSpan(1),
-                Section::make('Person')->schema([
-                    Select::make('person_id')
-                    ->relationship('person', 'name')
-                    ->label('Person')
-                    ->default(null)
-                    ->searchable()
-                    ->preload()
-                    ->nullable()
-                    ->createOptionForm([
-                        TextInput::make('name')
-                        ->required(),
-                        TextInput::make('email')
-                        ->email(),
-                        TextInput::make('phone')
-                        ->tel(),
-                        TextInput::make('title'),
-                        TextInput::make('address1'),
-                        TextInput::make('address2'),
-                        TextInput::make('city'),
-                        TextInput::make('postcode'),
-                    ]),
-                ])->columnSpan(1), 
-                ]),
+                ])->columnSpan(1),      
             ]);
+    
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('product')
+                Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('source')
+                Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('status')
+                Tables\Columns\TextColumn::make('phone')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('company_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('person_id')
+                Tables\Columns\TextColumn::make('address1')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('address2')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('city')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('postcode')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('company.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -136,9 +118,9 @@ class LeadResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListLeads::route('/'),
-            'create' => Pages\CreateLead::route('/create'),
-            'edit' => Pages\EditLead::route('/{record}/edit'),
+            'index' => Pages\ListPeople::route('/'),
+            'create' => Pages\CreatePerson::route('/create'),
+            'edit' => Pages\EditPerson::route('/{record}/edit'),
         ];
     }
 }
