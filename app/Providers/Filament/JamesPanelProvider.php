@@ -24,13 +24,13 @@ class JamesPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
+            ->spa()
             ->id('james')
             ->path('james')
-            ->spa()
             ->registration()
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Blue,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
