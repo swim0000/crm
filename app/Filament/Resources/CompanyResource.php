@@ -17,6 +17,7 @@ use App\Filament\Resources\CompanyResource\RelationManagers;
 
 class CompanyResource extends Resource
 {
+    protected static ?string $navigationGroup = 'People & Companies';
     protected static ?string $model = Company::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

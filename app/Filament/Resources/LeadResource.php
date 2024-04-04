@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
 use App\Models\Lead;
 use Filament\Tables;
 use Filament\Forms\Form;
@@ -12,14 +11,13 @@ use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
-use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\MarkdownEditor;
 use App\Filament\Resources\LeadResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\LeadResource\RelationManagers;
+use Filament\Forms\Components\Textarea;
 
 class LeadResource extends Resource
 {
+    protected static ?string $navigationGroup = 'Sellside';
     protected static ?string $model = Lead::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
@@ -35,9 +33,9 @@ class LeadResource extends Resource
                     ->options([
                         'new' => 'New',
                         'prospect' => 'Prospect',
-                        'currently_selling' => 'Currently selling',
+                        'currently selling' => 'Currently Selling',
                     ]),
-                    MarkdownEditor::make('description')
+                    Textarea::make('description')->rows(5)
                 ])->columnSpan(1)->columns(2),
                 Group::make()->schema([
                     Section::make('Company')->schema([
@@ -83,6 +81,7 @@ class LeadResource extends Resource
                         TextInput::make('city'),
                         TextInput::make('postcode'),
                     ]),
+                    
                 ])->columnSpan(1), 
                 ]),
             ]);
@@ -117,7 +116,7 @@ class LeadResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->slideOver(),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

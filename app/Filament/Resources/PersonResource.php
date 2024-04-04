@@ -18,6 +18,7 @@ use Filament\Forms\Components\Select;
 
 class PersonResource extends Resource
 {
+    protected static ?string $navigationGroup = 'People & Companies';
     protected static ?string $model = Person::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
